@@ -1,0 +1,6 @@
+{
+    "videoUploadOnPasses": false,
+    "video": false,
+    "screenshotOnRunFailure": false,
+    "chromeWebSecurity": false
+  }

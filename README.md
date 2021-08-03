@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+# Task Estimation Trainer &middot;
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Tests](https://github.com/jimskretas/task-estimation-trainer/workflows/Test/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/10e93b326f8bb0bbd6be/maintainability)](https://codeclimate.com/github/jimskretas/task-estimation-trainer/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/10e93b326f8bb0bbd6be/test_coverage)](https://codeclimate.com/github/jimskretas/task-estimation-trainer/test_coverage)
 
-## Available Scripts
+Web app that makes you better at estimating how long a task will take.
 
-In the project directory, you can run:
+## Installation
 
-### `npm start`
+- Clone the project.
+- Install the dependencies: `npm install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How to run
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Start the app: `npm start`
 
-### `npm test`
+## Other scripts available
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `npm run coverage`, with this script you can get the test coverage.
+  - It uses: `coverage:clean` to remove any old coverage files,
+  - `coverage:integration` to run the [Cypress](https://www.cypress.io/) tests,
+  - `coverage:unit` to run the unit tests,
+  - `coverage:merge` to merge the coverage reports.
 
-### `npm run build`
+## CICD
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Every time a pull request opens:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- project gets tested and has its test coverage report sent to [Code Climate](https://codeclimate.com/) using Github Actions (with [this](.github/workflows/test.yml) script),
+- Code Climate tests the code for Duplication/Complexity/Maintainability issues,
+- Netlify creates a deploy preview.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+When a pull request gets merged into master:
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- using [this](.github/workflows/coverage-master.yml) script, a new test coverage report is created and sent to Code Climate,
+- app gets deployed to Netlify.

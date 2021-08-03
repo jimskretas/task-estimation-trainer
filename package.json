@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -17,15 +19,22 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
+    "test": "react-scripts test --env=jsdom",
+    "test:integration": "cypress run",
+    "coverage": "npm run coverage:clean && npm run coverage:integration && npm run coverage:unit && npm run coverage:merge",
+    "coverage:clean": "rm -rf .nyc_output && rm -rf coverage",
+    "coverage:integration": "start-server-and-test 3000 test:integration",
+    "coverage:unit": "react-scripts test --watchAll=false --coverage --coverageDirectory=coverage/unit",
+    "coverage:merge": "istanbul-combine -d coverage/merged -p summary -r lcov -r json coverage/*/coverage-final.json",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:cypress/recommended"
     ]
   },
   "browserslist": {
@@ -39,5 +48,38 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "coverageReporters": [
+      "json",
+      "lcov"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ]
+  },
+  "nyc": {
+    "report-dir": "coverage/integration",
+    "reporter": [
+      "json",
+      "lcov"
+    ],
+    "all": true,
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "**/*.test.{js,jsx,ts,tsx}",
+      "**/test.{js,jsx,ts,tsx}"
+    ]
+  },
+  "devDependencies": {
+    "@cypress/code-coverage": "^3.9.10",
+    "@cypress/instrument-cra": "^1.4.0",
+    "@testing-library/cypress": "^8.0.0",
+    "cypress": "^8.1.0",
+    "eslint-plugin-cypress": "^2.11.3",
+    "istanbul-combine": "^0.3.0",
+    "start-server-and-test": "^1.13.1"
   }
 }
